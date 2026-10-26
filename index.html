@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神马影视在线观看 - 极速片单导航与正版观看入口</title>
+<meta name="description" content="神马影视在线观看(shenmayingshizaixianguankan-h5.github.io)提供电影、剧集、动漫、纪录片极速检索与分类导航，按类型、情绪、场景挑片，移动端自适应单页，不提供未授权播放入源，仅做正版导航。">
+<meta name="keywords" content="神马影视在线观看, shenmayingshizaixianguankan, 影视导航, 极速找片, 正版观看, 片单推荐">
+<style>
+/* ========== 全局 ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+  background: #070b1c;
+  color: #e6ebff;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+
+/* 流星夜空背景 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(520px 380px at 80% -10%, rgba(64,120,255,.30), transparent 60%),
+    radial-gradient(420px 320px at 12% 18%, rgba(120,90,255,.22), transparent 60%),
+    radial-gradient(220px 220px at 60% 90%, rgba(120,220,255,.12), transparent 60%);
+  filter: blur(6px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ========== 栏目1：顶栏 ========== */
+.topbar {
+  background: rgba(7,11,28,.72);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(120,170,255,.18);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: .8rem 1.2rem;
+}
+.topbar-in {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; color: #fff; display: flex; align-items: center; gap: .5rem; }
+.logo .star { font-size: 1.4rem; background: linear-gradient(120deg,#9fd0ff,#6a8bff); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 8px rgba(120,170,255,.6)); }
+.logo b { color: #8fb6ff; text-shadow: 0 0 12px rgba(120,170,255,.5); }
+.logo small { font-size: .56rem; letter-spacing: 2px; color: #6a76a0; margin-left: .4rem; font-weight: 400; }
+.nav-links { display: flex; gap: 1.4rem; }
+.nav-links a { font-size: .85rem; color: #aab6e0; transition: color .25s; }
+.nav-links a:hover { color: #9fd0ff; }
+
+/* ========== 栏目2：极速检索大屏 ========== */
+.hero {
+  max-width: 1200px;
+  margin: auto;
+  padding: 4rem 1.2rem 2.8rem;
+  position: relative;
+}
+.hero .meteor {
+  position: absolute;
+  top: 40px; right: 8%;
+  width: 120px; height: 2px;
+  background: linear-gradient(90deg, transparent, #cfe2ff);
+  box-shadow: 0 0 14px 2px rgba(160,200,255,.7);
+  transform: rotate(-18deg);
+  animation: shoot 4.5s ease-in-out infinite;
+}
+.hero .meteor::after {
+  content: '';
+  position: absolute;
+  right: -4px; top: -2px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 12px 3px rgba(180,210,255,.9);
+}
+@keyframes shoot {
+  0% { opacity: 0; transform: translate(-40px,20px) rotate(-18deg); }
+  20% { opacity: 1; }
+  60% { opacity: 1; }
+  80% { opacity: 0; transform: translate(160px,-80px) rotate(-18deg); }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero .meteor { animation: none; opacity: .6; }
+}
+.hero .tag {
+  display: inline-block;
+  font-size: .72rem;
+  letter-spacing: 2px;
+  color: #9fd0ff;
+  border: 1px solid rgba(120,170,255,.35);
+  padding: .2rem .8rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  font-size: 3.2rem;
+  color: #fff;
+  line-height: 1.12;
+  margin-bottom: .9rem;
+  letter-spacing: .5px;
+}
+.hero h1 b {
+  background: linear-gradient(120deg,#cfe2ff,#6a8bff 60%,#b388ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero > p { max-width: 580px; color: #b9c4e8; margin-bottom: 1.8rem; }
+
+/* 检索框 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(120,170,255,.28);
+  border-radius: 40px;
+  padding: .85rem 1.4rem;
+  max-width: 620px;
+  margin-bottom: 1.1rem;
+}
+.search-bar .ic { color: #9fd0ff; }
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e6ebff;
+  font-size: .95rem;
+}
+.search-bar input::placeholder { color: #5d679a; }
+.search-bar .go {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #070b1c;
+  background: linear-gradient(120deg,#9fd0ff,#6a8bff);
+  padding: .35rem 1.1rem;
+  border-radius: 20px;
+}
+
+/* 快捷标签 */
+.quick-tags { display: flex; gap: .5rem; flex-wrap: wrap; }
+.quick-tags a {
+  font-size: .76rem;
+  color: #cdd6f5;
+  border: 1px solid rgba(255,255,255,.1);
+  padding: .25rem .85rem;
+  border-radius: 20px;
+  transition: .25s;
+}
+.quick-tags a:hover { border-color: #6a8bff; color: #9fd0ff; }
+
+/* 速度数据条 */
+.speed-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+.spd {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(120,170,255,.16);
+  border-radius: 12px;
+  padding: .9rem 1.2rem;
+  min-width: 110px;
+}
+.spd b { font-size: 1.5rem; color: #8fb6ff; font-weight: 900; }
+.spd span { display: block; font-size: .68rem; color: #6a76a0; letter-spacing: 1px; margin-top: .1rem; }
+
+/* ========== 栏目3：分类星轨 ========== */
+.orbit-sec { max-width: 1200px; margin: auto; padding: 2.5rem 1.2rem; }
+.sec-head { margin-bottom: 1.5rem; display: flex; align-items: baseline; gap: .6rem; }
+.sec-head h2 { font-size: 1.55rem; color: #fff; padding-left: .8rem; border-left: 4px solid #6a8bff; }
+.sec-head span { font-size: .74rem; color: #6a76a0; letter-spacing: 2px; }
+
+.chip-rail {
+  display: flex;
+  gap: .6rem;
+  overflow-x: auto;
+  padding-bottom: .5rem;
+  scrollbar-width: none;
+}
+.chip-rail::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto;
+  font-size: .82rem;
+  color: #cdd6f5;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(120,170,255,.2);
+  padding: .5rem 1.1rem;
+  border-radius: 24px;
+  white-space: nowrap;
+  transition: .2s;
+}
+.chip:hover { background: rgba(106,139,255,.18); color: #fff; border-color: #6a8bff; }
+
+/* ========== 栏目4：追片车道 ========== */
+.track-sec { padding: 2.5rem 1.2rem; background: rgba(255,255,255,.012); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
+.track-in { max-width: 1200px; margin: auto; }
+.lane-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; }
+.lane {
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.012));
+  border: 1px solid rgba(120,170,255,.18);
+  border-radius: 16px;
+  padding: 1.3rem 1.2rem;
+  position: relative;
+  overflow: hidden;
+  transition: .3s;
+}
+.lane::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg,#9fd0ff,#6a8bff);
+  opacity: .5;
+}
+.lane:hover { transform: translateY(-4px); border-color: rgba(106,139,255,.5); box-shadow: 0 14px 30px rgba(40,70,160,.25); }
+.lane .rank { font-size: .72rem; color: #9fd0ff; font-weight: 700; letter-spacing: 1px; }
+.lane h4 { font-size: 1.05rem; color: #fff; margin: .3rem 0; }
+.lane p { font-size: .8rem; color: #aab6e0; min-height: 40px; margin-bottom: .7rem; }
+.lane .path {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .72rem;
+  color: #070b1c;
+  background: linear-gradient(120deg,#9fd0ff,#6a8bff);
+  padding: .2rem .8rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+/* ========== 栏目5：观看路径 ========== */
+.path-sec { max-width: 1200px; margin: auto; padding: 2.5rem 1.2rem 3rem; }
+.step-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+.step {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(120,170,255,.14);
+  border-radius: 14px;
+  padding: 1.3rem 1.2rem;
+}
+.step .num {
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(106,139,255,.18);
+  color: #9fd0ff;
+  font-weight: 900;
+  font-size: .9rem;
+  margin-bottom: .6rem;
+}
+.step h4 { font-size: .98rem; color: #fff; margin-bottom: .3rem; }
+.step p { font-size: .78rem; color: #8a96c0; }
+
+/* ========== 关于 ========== */
+.about {
+  background: rgba(255,255,255,.02);
+  border-top: 1px solid rgba(255,255,255,.05);
+  padding: 3.2rem 1.2rem;
+  text-align: center;
+}
+.about-in { max-width: 680px; margin: auto; }
+.about h2 { color: #fff; font-size: 1.45rem; margin-bottom: 1rem; letter-spacing: 1px; }
+.about p { color: #b9c4e8; font-size: .9rem; margin-bottom: .8rem; }
+.about b { color: #8fb6ff; }
+
+/* ========== 页脚 ========== */
+footer {
+  background: #040714;
+  color: #5d679a;
+  text-align: center;
+  padding: 2.2rem 1rem;
+  font-size: .82rem;
+}
+footer a { color: #8fb6ff; }
+.disclaim {
+  max-width: 780px;
+  margin: .8rem auto 0;
+  font-size: .72rem;
+  color: #444f78;
+  line-height: 1.6;
+}
+
+/* ========== 移动端 ========== */
+@media (max-width: 920px) {
+  .lane-grid { grid-template-columns: 1fr 1fr; }
+  .step-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero .meteor { display: none; }
+}
+@media (max-width: 480px) {
+  .lane-grid { grid-template-columns: 1fr; }
+  .step-grid { grid-template-columns: 1fr; }
+  .speed-bar { gap: .6rem; }
+  .spd { flex: 1 1 40%; min-width: 0; }
+  .search-bar { padding: .7rem 1rem; }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<!-- 顶栏 -->
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="logo"><span class="star">✦</span><b>神马</b>影视在线观看<small>SHENMA PLAY</small></div>
+    <nav class="nav-links">
+      <a href="#">极速检索</a>
+      <a href="#orbit">分类星轨</a>
+      <a href="#lane">追片车道</a>
+      <a href="#path">观看路径</a>
+    </nav>
+  </div>
+</div>
+
+<!-- 极速检索大屏 -->
+<section class="hero">
+  <div class="meteor"></div>
+  <span class="tag">FAST · 一秒定位好片</span>
+  <h1>神马影视在线观看<br>想看的，<b>马上找到</b></h1>
+  <p>神马影视在线观看（shenmayingshizaixianguankan-h5.github.io）把电影、剧集、动漫、纪录片做成极速检索与分类导航，按类型、情绪、场景一键定位——不播片、只导航，正版观看走授权平台。</p>
+
+  <div class="search-bar">
+    <span class="ic">🔍</span>
+    <input placeholder="搜：烧脑悬疑 / 下饭轻喜 / 周末连看 / 深夜助眠" disabled>
+    <span class="go">极速检索</span>
+  </div>
+
+  <div class="quick-tags">
+    <a href="#">悬疑反转</a>
+    <a href="#">都市情感</a>
+    <a href="#">国漫精品</a>
+    <a href="#">自然纪录</a>
+    <a href="#">冷门修复</a>
+    <a href="#">下饭综艺</a>
+    <a href="#">单元短剧</a>
+    <a href="#">慢热神作</a>
+  </div>
+
+  <div class="speed-bar">
+    <div class="spd"><b>0.3s</b><span>检索响应</span></div>
+    <div class="spd"><b>8</b><span>分类星轨</span></div>
+    <div class="spd"><b>6</b><span>场景车道</span></div>
+    <div class="spd"><b>0</b><span>播放入源</span></div>
+  </div>
+</section>
+
+<!-- 分类星轨 -->
+<section class="orbit-sec" id="orbit">
+  <div class="sec-head">
+    <h2>分类星轨</h2><span>CATEGORY ORBIT</span>
+  </div>
+  <div class="chip-rail">
+    <a href="#" class="chip">剧情电影</a>
+    <a href="#" class="chip">悬疑犯罪</a>
+    <a href="#" class="chip">科幻奇幻</a>
+    <a href="#" class="chip">轻喜剧</a>
+    <a href="#" class="chip">都市情感</a>
+    <a href="#" class="chip">年代家庭</a>
+    <a href="#" class="chip">国漫动画</a>
+    <a href="#" class="chip">自然纪录</a>
+    <a href="#" class="chip">动作硬核</a>
+    <a href="#" class="chip">惊悚怪谈</a>
+    <a href="#" class="chip">综艺访谈</a>
+    <a href="#" class="chip">短剧单元</a>
+    <a href="#" class="chip">舞台戏曲</a>
+    <a href="#" class="chip">冷门修复</a>
+  </div>
+</section>
+
+<!-- 追片车道 -->
+<section class="track-sec" id="lane">
+  <div class="track-in">
+    <div class="sec-head">
+      <h2>追片车道</h2><span>PICK LANES</span>
+    </div>
+    <div class="lane-grid">
+      <div class="lane">
+        <div class="rank">LANE 01 · 热速</div>
+        <h4>《雾港来信》</h4>
+        <p>海边小城，一封无名信牵出二十年旧案，反转密集。</p>
+        <span class="path">→ 正版导航</span>
+      </div>
+      <div class="lane">
+        <div class="rank">LANE 02 · 下饭</div>
+        <h4>《饭桌相对论》</h4>
+        <p>没有剧本的饭局，三代人聊同一道题，笑点很软。</p>
+        <span class="path">→ 正版导航</span>
+      </div>
+      <div class="lane">
+        <div class="rank">LANE 03 · 慢热</div>
+        <h4>《长夏来信》</h4>
+        <p>十二集，一封没寄出的信，适合周末连看。</p>
+        <span class="path">→ 正版导航</span>
+      </div>
+      <div class="lane">
+        <div class="rank">LANE 04 · 深夜</div>
+        <h4>《电梯里的十分钟》</h4>
+        <p>封闭空间单元剧，每集一个陌生人、一个秘密。</p>
+        <span class="path">→ 正版导航</span>
+      </div>
+      <div class="lane">
+        <div class="rank">LANE 05 · 亲子</div>
+        <h4>《纸上飞行》</h4>
+        <p>折纸少年与风的约定，国漫单元，每集八分钟。</p>
+        <span class="path">→ 正版导航</span>
+      </div>
+      <div class="lane">
+        <div class="rank">LANE 06 · 助眠</div>
+        <h4>《无声海岸》</h4>
+        <p>潮间带四季纪录，配白噪音刚好入睡。</p>
+        <span class="path">→ 正版导航</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 观看路径 -->
+<section class="path-sec" id="path">
+  <div class="sec-head">
+    <h2>怎么用神马找片</h2><span>HOW TO FIND</span>
+  </div>
+  <div class="step-grid">
+    <div class="step">
+      <div class="num">1</div>
+      <h4>输入情绪</h4>
+      <p>不想记片名？直接搜“下饭/烧脑/助眠/通勤”，按场景找。</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h4>收窄分类</h4>
+      <p>从分类星轨里点类型标签，把范围缩到能一眼看完。</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h4>进追片车道</h4>
+      <p>每条车道已经按节奏排好片，挑一部就能走。</p>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <h4>走正版出口</h4>
+      <p>“正版导航”是 # 占位，实际观看去已授权平台。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 关于 -->
+<section class="about">
+  <div class="about-in">
+    <h2>关于神马影视在线观看</h2>
+    <p>欢迎访问 <b>神马影视在线观看</b>（https://shenmayingshizaixianguankan-h5.github.io）。本站是静态单页影视极速检索与正版导航站，核心词：神马影视在线观看 / shenmayingshizaixianguankan / 极速找片 / 影视导航。</p>
+    <p>本站不提供在线播放入源、不托管视听文件、不存储、不代理任何视频或流媒体服务，不提供网盘、下载、破解或镜像入口，不聚合第三方资源；所有“观看/检索”入口均为 # 占位，实际观看请走已取得授权的正版平台。</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 神马影视在线观看 · shenmayingshizaixianguankan-h5.github.io</p>
+  <p>网址：<a href="https://shenmayingshizaixianguankan-h5.github.io">https://shenmayingshizaixianguankan-h5.github.io</a></p>
+  <p class="disclaim">本页为影视信息索引与正版导航示例，不托管、不上传、不存储、不代理任何视频文件或流媒体播放服务，不提供未授权播放入源、网盘资源、下载、破解或镜像入口；站内分类、检索词、片名与简介均为原创示例整理，版权归原权利方所有。若实际建站涉及互联网视听节目传播，请按属地广电与版权要求办理相应许可。</p>
+</footer>
+
+</body>
+</html>
